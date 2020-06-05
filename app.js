@@ -1,3 +1,5 @@
+//mongod --dbpath=data --bind_ip 127.0.0.1
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -9,6 +11,23 @@ const usersRouter = require('./routes/users');
 const campsiteRouter = require('./routes/campsiteRouter');
 const promtionRouter = require('./routes/promotionRouter');
 const partnerRouter = require('./routes/partnerRouter');
+
+
+//Establish Mongo Connection
+
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/nucampsite';
+const connect = mongoose.connect(url, {
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+connect.then(() => console.log('Connected correctly to server'),
+  err => console.log(err)
+);
 
 const app = express();
 
