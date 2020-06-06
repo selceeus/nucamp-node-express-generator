@@ -82,7 +82,7 @@ campsiteRouter.route('/:campsiteId/comments')
         if(campsite) {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.json(campsites.comments);
+            res.json(campsite.comments);
         } else {
             err = new Error(`Campsite ${req.params.campsiteId} not found`);
             err.status = 404;
@@ -100,7 +100,7 @@ campsiteRouter.route('/:campsiteId/comments')
             .then(campsite => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(campsites);
+                res.json(campsite);
             }).catch(err => next(err));
         } else {
             err = new Error(`Campsite ${req.params.campsiteId} not found`);
@@ -116,17 +116,18 @@ campsiteRouter.route('/:campsiteId/comments')
 })
 .delete((req, res, next) => {
     Campsite.findById(req.params.campsiteId)
-    .then(campsite=> {
-        if(campsite) {
-            for( let i = (campsite.comments.length -1 ); i >= 0; i--) {
-                campsite.comments.id(campsite.comment[i]._id).remove();
+    .then(campsite => {
+        if (campsite) {
+            for (let i = (campsite.comments.length-1); i >= 0; i--) {
+                campsite.comments.id(campsite.comments[i]._id).remove();
             }
             campsite.save()
             .then(campsite => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(campsites);
-            }).catch(err => next(err));
+                res.json(campsite);
+            })
+            .catch(err => next(err));
         } else {
             err = new Error(`Campsite ${req.params.campsiteId} not found`);
             err.status = 404;
@@ -143,7 +144,7 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
         if(campsite && campsite.comments.id(req.params.commentId)) {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.json(campsites.comments.id(req.params.commentId));
+            res.json(campsite.comments.id(req.params.commentId));
         } else if (!campsite) {
             err = new Error(`Campsite ${req.params.campsiteId} not found`);
             err.status = 404;
