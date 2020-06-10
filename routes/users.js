@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', (req, res, next) => {
-  User.findOne({username: req.bodu.username})
+  User.findOne({username: req.body.username})
   .then(user => {
     if(user){
       const err = new Error(`User ${req.body.username} already exists.`);
