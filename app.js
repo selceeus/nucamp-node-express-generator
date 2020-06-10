@@ -49,6 +49,9 @@ app.use(session({
   store: new FileStore()
 }));
 
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
 //Auth
 
 function auth(req, res, next){
@@ -93,8 +96,6 @@ app.use(auth);
  
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promtionRouter);
 app.use('/partners', partnerRouter);
