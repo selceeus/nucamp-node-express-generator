@@ -38,7 +38,6 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-//app.use(cookieParser('1234-4455-3332-1111'));
 
 app.use(passport.initialize());
 
